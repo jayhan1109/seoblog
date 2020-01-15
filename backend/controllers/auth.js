@@ -21,7 +21,7 @@ export const signup = (req, res) => {
     newUser.save((err, success) => {
       if (err) {
         return res.status(400).json({
-          error: err
+          error: "Sign Up Fail"
         });
       }
       res.json({

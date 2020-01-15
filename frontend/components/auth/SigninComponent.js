@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { signup } from "../../actions/auth";
+import { signin, authenticate } from "../../actions/auth";
+import Router from "next/router";
 
-const SignupComponent = () => {
+const SigninComponent = () => {
   const [values, setValues] = useState({
-    name: "",
     email: "",
     password: "",
     error: "",
@@ -12,26 +12,22 @@ const SignupComponent = () => {
     showForm: true
   });
 
-  const { name, email, password, error, loading, message, showForm } = values;
+  const { email, password, error, loading, message, showForm } = values;
 
   const handleSubmit = async e => {
     e.preventDefault();
     setValues({ ...values, loading: true, error: false });
-    const user = { name, email, password };
-    const res = await   signup(user);
+    const user = { email, password };
+    const res = await signin(user);
     if (res.error) {
       setValues({ ...values, error: res.error, loading: false });
     } else {
-      setValues({
-        ...values,
-        name: "",
-        email: "",
-        password: "",
-        error: "",
-        loading: false,
-        message: res.data.message,
-        showForm: false
-      });
+      // save user token to cookie
+      // save user info to localstorage
+      // authenticate user
+      authenticate(res.data,()=>{
+        Router.push(`/`);
+      })
     }
   };
   const handleChange = name => e => {
@@ -50,16 +46,6 @@ const SignupComponent = () => {
       {showMessage()}
       {showForm && (
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input
-              name="name"
-              value={name}
-              type="text"
-              className="form-control"
-              placeholder="Type your name"
-              onChange={handleChange("name")}
-            />
-          </div>
           <div className="form-group">
             <input
               name="email"
@@ -81,7 +67,7 @@ const SignupComponent = () => {
             />
           </div>
           <div>
-            <button className="btn btn-primary">Sign Up</button>
+            <button className="btn btn-primary">Sign In</button>
           </div>
         </form>
       )}
@@ -89,4 +75,4 @@ const SignupComponent = () => {
   );
 };
 
-export default SignupComponent;
+export default SigninComponent;
