@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+    "dev":"concurrently \"npm run next\" \"npm run front\"",
+    "next": "next",
+    "front" : "cd ../backend && npm run dev",
     "build": "next build",
     "start": "next start"
   },
@@ -12,6 +14,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.1",
+    "concurrently": "^5.0.2",
     "next": "^9.1.7",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
