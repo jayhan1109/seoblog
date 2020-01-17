@@ -1,3 +1,3 @@
-export const time = (req,res)=>{
+exports.time = (req,res)=>{
   res.json({time:Date().toString()});
 }

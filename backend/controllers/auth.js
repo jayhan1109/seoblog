@@ -1,12 +1,12 @@
-import User from "../models/user";
-import shortId from "shortid";
-import jwt from "jsonwebtoken";
-import expressJwt from "express-jwt";
-import dotEnv from "dotenv";
+const User = require('../models/user');
+const shortId = require('shortid');
+const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
+const dotEnv =require("dotenv");
 
 dotEnv.config();
 
-export const signup = (req, res) => {
+exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
     if (user) {
       return res.status(400).json({
@@ -31,7 +31,7 @@ export const signup = (req, res) => {
   });
 };
 
-export const signin = (req, res) => {
+exports.signin = (req, res) => {
   const { email, password } = req.body;
   // check if user exist
   User.findOne({ email }).exec((err, user) => {
@@ -59,13 +59,13 @@ export const signin = (req, res) => {
   });
 };
 
-export const signout =(req,res)=>{
+exports.signout =(req,res)=>{
   res.clearCookie('token');
   res.json({
     message:'Signout success'
   })
 }
 
-export const requireSignin=expressJwt({
+exports.requireSignin=expressJwt({
   secret:process.env.JWT_SECRET
 })

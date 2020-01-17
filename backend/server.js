@@ -1,16 +1,14 @@
-import express from "express";
-import morgan from "morgan";
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import dotEnv from "dotenv";
-import mongoose from "mongoose";
+const express = require('express');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-// Bring routes
-import {router as blogRouter} from './routes/blog';
-import {router as authRouter} from './routes/auth';
-
-dotEnv.config();
+// bring routes
+const blogRouter = require('./routes/blog');
+const authRouter = require('./routes/auth');
 
 // app
 const app = express();
